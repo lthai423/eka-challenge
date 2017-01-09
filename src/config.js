@@ -7,7 +7,7 @@ const environment = {
   production: {
     isProduction: true
   }
-}[process.env.NODE_ENV || 'development'];
+}[process.env.NODE_ENV || 'production'];
 
 module.exports = Object.assign({
   host: process.env.HOST || 'localhost',

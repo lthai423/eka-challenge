@@ -44,7 +44,6 @@
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
-        "PORT": 8080,
         "APIPORT": 3030
       }
     },
@@ -128,6 +127,7 @@
     "pretty-error": "^1.2.0",
     "react": "0.14.8",
     "react-bootstrap": "^0.30.7",
+    "react-bootstrap-table": "^2.8.3",
     "react-dom": "0.14.8",
     "react-helmet": "^2.2.0",
     "react-inline-css": "^2.0.0",

@@ -5,6 +5,5 @@
  *
  */
 
-export InfoBar from './InfoBar/InfoBar';
 export ValidateForm from './ValidateForm/ValidateForm';
 export ValidateTable from './ValidateTable/ValidateTable';

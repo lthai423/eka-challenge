@@ -10,7 +10,6 @@ import Panel from 'react-bootstrap/lib/Panel';
 
 @connect(
   (state) => {
-    console.log(state);
     return ({
       brokerAuthority: state.info.brokerAuthority,
       commonAuthority: state.info.commonAuthority,
@@ -18,11 +17,8 @@ import Panel from 'react-bootstrap/lib/Panel';
       cargoInsurance: state.info.cargoInsurance,
       autoInsurance: state.info.autoInsurance,
       generalInsurance: state.info.generalInsurance,
-      cargoInsuranceExpiration: state.info.cargoInsuranceExpiration,
-      autoInsuranceExpiration: state.info.autoInsuranceExpiration,
-      generalInsuranceExpiration: state.info.generalInsuranceExpiration,
+      expirationDate: state.info.expirationDate,
       safetyRating: state.info.safetyRating,
-      cprRating: state.info.cprRating
     });
   }
 )
@@ -36,29 +32,21 @@ export default class ValidateTable extends Component {
             <Table responsive>
               <thead>
                 <tr>
-                  <th></th>
-                  <th>Type</th>
-                  <th>Rating</th>
-                  <th>Type</th>
-                  <th>Qualified</th>
-                  <th>Expiration</th>
+                  <th style={{textAlign: 'center'}}></th>
+                  <th style={{textAlign: 'center'}}>Type</th>
+                  <th style={{textAlign: 'center'}}>Rating</th>
+                  <th style={{textAlign: 'center'}}>Type</th>
+                  <th style={{textAlign: 'center'}}>Qualified</th>
+                  <th style={{textAlign: 'center'}}>Expiration</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Valid CPR Rating</td>
-                  <td></td>
-                  <td>{this.props.cprRating || 'N/A'}</td>
-                  <td></td>
-                  <td>{this.props.cprRating ? 'Qualified' : 'Not Qualified'}</td>
-                  <td></td>
-                </tr>
-                <tr>
                   <td>Government Safety Rating</td>
                   <td></td>
-                  <td>{this.props.safetyRating || 'N/A'}</td>
+                  <td>{this.props.safetyRating || 'No Safety Rating Found'}</td>
                   <td></td>
-                  <td>{this.props.safetyRating ? 'Qualified' : 'Not Qualified'}</td>
+                  <td>{this.props.safetyRating ? 'Qualified' : 'Please Submit Further Documentation'}</td>
                   <td></td>
                 </tr>
                 <tr>
@@ -66,7 +54,7 @@ export default class ValidateTable extends Component {
                   <td>Common</td>
                   <td></td>
                   <td>{this.props.commonAuthority}</td>
-                  <td>{this.props.commonAuthority === 'Active' ? 'Qualified' : 'Not Qualified'}</td>
+                  <td>{this.props.commonAuthority === 'Active' ? 'Qualified' : 'Please Submit Further Documentation'}</td>
                   <td></td>
                 </tr>
                 <tr>
@@ -74,7 +62,7 @@ export default class ValidateTable extends Component {
                   <td>Contract</td>
                   <td></td>
                   <td>{this.props.contractAuthority}</td>
-                  <td>{this.props.contractAuthority === 'Active' ? 'Qualified' : 'Not Qualified'}</td>
+                  <td>{this.props.contractAuthority === 'Active' ? 'Qualified' : 'Please Submit Further Documentation'}</td>
                   <td></td>
                 </tr>
                 <tr>
@@ -82,32 +70,32 @@ export default class ValidateTable extends Component {
                   <td>Broker</td>
                   <td></td>
                   <td>{this.props.brokerAuthority}</td>
-                  <td>{this.props.brokerAuthority === 'Active' ? 'Qualified' : 'Not Qualified'}</td>
+                  <td>{this.props.brokerAuthority === 'Active' ? 'Qualified' : 'Please Submit Further Documentation'}</td>
                   <td></td>
                 </tr>
                 <tr>
                   <td>Valid Carrier Insurance</td>
                   <td>Cargo</td>
                   <td></td>
-                  <td></td>
-                  <td>{this.props.cargoInsurance || 'N/A'}</td>
-                  <td>{this.props.cargoInsuranceExpiration || 'N/A'}</td>
+                  <td>{this.props.cargoInsurance ? 'Active' : 'None'} </td>
+                  <td>{this.props.cargoInsurance || 'No Cargo Insurance Found'}</td>
+                  <td>{this.props.expirationDate || 'N/A'}</td>
                 </tr>
                 <tr>
                   <td></td>
                   <td>Auto</td>
                   <td></td>
-                  <td></td>
-                  <td>{this.props.autoInsurance || 'N/A'}</td>
-                  <td>{this.props.autoInsuranceExpiration || 'N/A'}</td>
+                  <td>{this.props.autoInsurance ? 'Active' : 'None'} </td>
+                  <td>{this.props.autoInsurance || 'No Auto Insurance Found'}</td>
+                  <td>{this.props.expirationDate || 'N/A'}</td>
                 </tr>
                 <tr>
                   <td></td>
                   <td>General</td>
                   <td></td>
-                  <td></td>
-                  <td>{this.props.generalInsurance || 'N/A'}</td>
-                  <td>{this.props.generalInsuranceExpiration || 'N/A'}</td>
+                  <td>{this.props.generalInsurance ? 'Active' : 'None'} </td>
+                  <td>{this.props.generalInsurance || 'No Cargo Insruance Found'}</td>
+                  <td>{this.props.expirationDate || 'N/A'}</td>
                 </tr>
               </tbody>
             </Table>

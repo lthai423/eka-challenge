@@ -38,7 +38,7 @@ export default class ValidateForm extends Component {
           {renderInput(hint, 'Password Hint')}
           <div className={'col-lg-12'}>
             <FormGroup>
-              <FormControl style={{color: '#999999'}} id={broker} {...broker} componentClass="select" placeholder="select">
+              <FormControl style={{color: '#999999'}} id={broker.name} {...broker} componentClass="select" placeholder="select">
                 <option value="select">Select Broker or Create New One</option>
                 <option value="broker1">Broker1</option>
                 <option value="broker2">Broker2</option>
@@ -54,7 +54,7 @@ export default class ValidateForm extends Component {
           <div className={'col-lg-12'}>
             <FormGroup>
               <ControlLabel>Are you a single owner/operator</ControlLabel>
-              <FormControl id={singleOp} style={{color: '#999999'}} id={broker} {...broker} componentClass="select" placeholder="select">
+              <FormControl id={singleOp} style={{color: '#999999'}} {...broker} componentClass="select" placeholder="select">
                 <option value="select">Are you a single owner/operator?</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
