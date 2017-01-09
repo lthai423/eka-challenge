@@ -49,7 +49,7 @@ export function search(stuff) {
   // const self = this;
 
   const searchOptions = {
-    uri: 'http://localhost:3000/search',
+    uri: 'https://young-wildwood-90521.herokuapp.com/search',
     method: 'GET',
     headers: {
       'Content-Type': 'plain/text',
@@ -81,7 +81,7 @@ export function handleSubmit(stuff) {
 
   if (!document.cookie || isExpired) { // create new auth token if old one expired already
     const options = {
-      uri: 'http://localhost:3000/login',
+      uri: 'https://young-wildwood-90521.herokuapp.com/login',
       method: 'GET'
     };
 
