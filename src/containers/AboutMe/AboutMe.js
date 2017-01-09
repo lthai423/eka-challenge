@@ -11,7 +11,7 @@ export default class AboutMe extends Component {
         <Helmet title="AboutMe"/>
         <div className={styles.center}>
           <Panel className={styles.myPanel}>
-            <p> Helllo </p>
+            <p> Hello, this page is here to demonstrate React-Router. </p>
           </Panel>
         </div>
       </div>
