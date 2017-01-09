@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import Helmet from 'react-helmet';
 import config from '../../config';
-
+import { LinkContainer } from 'react-router-bootstrap';
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired
@@ -21,7 +21,7 @@ export default class App extends Component {
     return (
       <div className={styles.app}>
         <Helmet {...config.app.head}/>
-        <Navbar fixedTop>
+        <Navbar fixedTop className={styles.navbar}>
           <Navbar.Header>
             <Navbar.Brand>
               <IndexLink to="/" activeStyle={{color: '#33e0ff'}}>
@@ -37,7 +37,10 @@ export default class App extends Component {
               { /* 'this is where you insert routes'c */ }
             </Nav>
             <Nav navbar pullRight>
-              <NavItem eventKey={1} target="_blank" title="View my Github" href="https://github.com/lthai423/">
+              <LinkContainer to="/aboutMe">
+                <NavItem eventKey={1} activeStyle={{color: '#33e0ff'}}>About Me</NavItem>
+              </LinkContainer>
+              <NavItem eventKey={2} target="_blank" title="View my Github" href="https://github.com/lthai423/">
                 <i className="fa fa-github"/>
               </NavItem>
             </Nav>

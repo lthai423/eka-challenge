@@ -16,17 +16,17 @@ module.exports = Object.assign({
   apiPort: process.env.APIPORT,
   app: {
     title: 'EKA Technical Challenge',
-    description: 'All the modern best practices in one example.',
+    description: 'Using React, Redux, React-Router, React-Bootstrap, Webpack, and other modern best practices.',
     head: {
       titleTemplate: 'EKA Technical Challenge: %s',
       meta: [
-        {name: 'description', content: 'All the modern best practices in one example.'},
+        {name: 'description', content: 'Using React, Redux, React-Router, React-Bootstrap, Webpack, and other modern best practices.'},
         {charset: 'utf-8'},
         {property: 'og:site_name', content: 'EKA Technical Challenge'},
         {property: 'og:image', content: 'https://cdn0.iconfinder.com/data/icons/free-daily-icon-set/512/GlobeCycle-128.png'},
         {property: 'og:locale', content: 'en_US'},
         {property: 'og:title', content: 'EKA Technical Challenge'},
-        {property: 'og:description', content: 'All the modern best practices in one example.'},
+        {property: 'og:description', content: 'Using React, Redux, React-Router, React-Bootstrap, Webpack, and other modern best practices.'},
         {property: 'og:card', content: 'summary'},
         {property: 'og:site', content: '@lthai423'},
         {property: 'og:creator', content: '@lthai423'},

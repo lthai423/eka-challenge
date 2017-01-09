@@ -5,14 +5,7 @@ import { ValidateForm } from 'components';
 import Panel from 'react-bootstrap/lib/Panel';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { handleSubmit } from './config';
-
-const resultAction = (stuff) => {
-  return {
-    ...stuff,
-    type: 'LOAD'
-  };
-};
+import { handleSubmit, handleAlertDismiss, resultAction, renderAlert } from './config';
 
 @connect(
   () => ({}),
@@ -26,6 +19,11 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = handleSubmit.bind(this);
+    this.handleAlertDismiss = handleAlertDismiss.bind(this);
+    this.renderAlert = renderAlert.bind(this);
+    this.state = {
+      alertVisible: false
+    };
   }
 
   render() {
@@ -42,6 +40,7 @@ export default class Home extends Component {
         </div>
         <div className={styles.center}>
           <Panel className={styles.myPanel}>
+            { this.renderAlert() }
             <ValidateForm onSubmit={this.handleSubmit}/>
           </Panel>
         </div>

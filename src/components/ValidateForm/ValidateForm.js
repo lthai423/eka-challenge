@@ -24,7 +24,7 @@ export default class ValidateForm extends Component {
     const renderInput = (field, label) =>
       <div className="form-group" >
         <div className={'col-lg-12 '}>
-          <input type="text" className="form-control" id={field.name} placeholder={label} {...field}/>
+          <input type="text" className="form-control" id={field.name} type={field.name === 'password' || field.name === 'password2' ? 'password' : 'text'} placeholder={label} {...field}/>
         </div>
       </div>;
 

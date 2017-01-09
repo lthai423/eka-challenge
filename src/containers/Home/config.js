@@ -1,13 +1,17 @@
 import request from 'request';
 import { parseString } from 'xml2js';
 import {browserHistory} from 'react-router';
+import Alert from 'react-bootstrap/lib/Alert';
+import Button from 'react-bootstrap/lib/Button';
+import React from 'react';
 
 export function getChanges(xml) {
   console.log(xml);
   if (xml['soapenv:Envelope']['soapenv:Body'][0]['soapenv:Fault']) {
     return {
       xml: xml,
-      error: true
+      error: true,
+      reason: 'Invalid MC or DOT number.'
     };
   }
 
@@ -16,7 +20,7 @@ export function getChanges(xml) {
     return {
       xml: xml,
       error: true,
-      detailedMessage: xmlResultData['tcor:serviceError'][0]['tcor:detailedMessage'][0]
+      reason: xmlResultData['tcor:serviceError'][0]['tcor:detailedMessage'][0]
     };
   }
 
@@ -45,9 +49,20 @@ export function getChanges(xml) {
   return result;
 }
 
-export function search(stuff) {
-  // const self = this;
+export function setAlertMessages(stuff, result) {
+  const changed = getChanges(result);
+  if (changed.error) {
+    this.setState({alertVisible: true, errorMessage: changed.reason});
+  } else {
+    this.setState({alertVisible: false, errorMessage: ''});
+    this.props.resultAction(changed, result);
+    browserHistory.push('/about');
+  }
 
+  console.log(changed.error, 'jdsalkfja;lkdsajfads;lk');
+}
+
+export function search(stuff) {
   const searchOptions = {
     uri: 'https://young-wildwood-90521.herokuapp.com/search',
     method: 'GET',
@@ -60,39 +75,84 @@ export function search(stuff) {
   request(searchOptions, (err, response, body) => {
     const xml = JSON.parse(body).body;
     parseString(xml, (error, result) => {
-      const changed = getChanges(result);
-      if (changed.error) {
-        // self.on();
-      } else {
-        // self.off();
-        this.props.resultAction(changed, result);
-        browserHistory.push('/about');
-      }
+      setAlertMessages.apply(this, [stuff, result]);
     });
   });
 }
 
 export function handleSubmit(stuff) {
-  const cookieObj = {};
-  document.cookie.split('; ').forEach((item) => {
-    cookieObj[item.split('=')[0]] = item.split('=')[1];
-  });
-  const isExpired = (Math.abs(new Date(cookieObj.expiry).valueOf() - new Date().getTime()) / 36e5) - 12;
+  let willNotSubmit = true;
 
-  if (!document.cookie || isExpired) { // create new auth token if old one expired already
-    const options = {
-      uri: 'https://young-wildwood-90521.herokuapp.com/login',
-      method: 'GET'
-    };
-
-    request(options, (err, res) => {
-      const body = JSON.parse(res.body);
-      document.cookie = 'primary=' + body.primary + ';';
-      document.cookie = 'secondary=' + body.secondary + ';';
-      document.cookie = 'expiry=' + body.expiration + ';';
-      search.call(this, stuff);
-    });
+  if (!stuff.name) {
+    this.setState({alertVisible: true, errorMessage: 'Please Input Name.  '});
+  } else if (!stuff.email) {
+    this.setState({alertVisible: true, errorMessage: 'Please Input Email.  '});
+  } else if (!stuff.password || !stuff.password2) {
+    this.setState({alertVisible: true, errorMessage: 'Please Input Password.  '});
+  } else if (stuff.password !== stuff.password2) {
+    this.setState({alertVisible: true, errorMessage: 'Please double check passwords.  '});
+  } else if (!stuff.hint) {
+    this.setState({alertVisible: true, errorMessage: 'Please Input Password Hint.  '});
+  } else if (!stuff.email) {
+    this.setState({alertVisible: true, errorMessage: 'Please Input Email.  '});
+  } else if (!stuff.broker) {
+    this.setState({alertVisible: true, errorMessage: 'Please Select Broker.  '});
+  } else if (!stuff.mc_num && !stuff.dot_num) {
+    this.setState({alertVisible: true, errorMessage: 'Please Input Either MC or DOT Number.  '});
+  } else if (!stuff.email) {
+    this.setState({alertVisible: true, errorMessage: 'Please Select Single Owner/Operator Status.  '});
   } else {
-    search.call(this, stuff);
+    willNotSubmit = false;
   }
+
+  if (!willNotSubmit) {
+    const cookieObj = {};
+    document.cookie.split('; ').forEach((item) => {
+      cookieObj[item.split('=')[0]] = item.split('=')[1];
+    });
+    const isExpired = (Math.abs(new Date(cookieObj.expiry).valueOf() - new Date().getTime()) / 36e5) - 12 < 0;
+
+    if (!document.cookie || isExpired) { // create new auth token if old one expired already
+      const options = {
+        uri: 'https://young-wildwood-90521.herokuapp.com/login',
+        method: 'GET'
+      };
+
+      request(options, (err, res) => {
+        console.log(err);
+        const body = JSON.parse(res.body);
+        document.cookie = 'primary=' + body.primary + ';';
+        document.cookie = 'secondary=' + body.secondary + ';';
+        document.cookie = 'expiry=' + body.expiration + ';';
+        search.call(this, stuff);
+      });
+    } else {
+      search.call(this, stuff);
+    }
+  }
+}
+
+export function renderAlert() {
+  if (this.state.alertVisible) {
+    return (
+      <Alert bsStyle="danger" onDismiss={this.handleAlertDismiss}>
+        <h4>Oh no! You got an error!</h4>
+        <p>{this.state.errorMessage}</p>
+        <p>
+          <Button onClick={this.handleAlertDismiss}>Hide Alert</Button>
+        </p>
+      </Alert>
+    );
+  }
+}
+
+export function resultAction(stuff) {
+  return {
+    ...stuff,
+    type: 'LOAD'
+  };
+}
+
+export function handleAlertDismiss() {
+  this.setState({alertVisible: false});
 }

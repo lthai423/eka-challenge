@@ -10,9 +10,7 @@ export default class About extends Component {
       <div>
         <Helmet title="About"/>
         <div>
-          <div className="container">
-            <ValidateTable />
-          </div>
+          <ValidateTable />
         </div>
       </div>
     );

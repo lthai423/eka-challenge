@@ -78,7 +78,7 @@ export default class ValidateTable extends Component {
                   <td>Cargo</td>
                   <td></td>
                   <td>{this.props.cargoInsurance ? 'Active' : 'None'} </td>
-                  <td>{this.props.cargoInsurance || 'No Cargo Insurance Found'}</td>
+                  <td>{this.props.cargoInsurance || 'Please Submit Further Documentation'}</td>
                   <td>{this.props.expirationDate || 'N/A'}</td>
                 </tr>
                 <tr>
@@ -86,7 +86,7 @@ export default class ValidateTable extends Component {
                   <td>Auto</td>
                   <td></td>
                   <td>{this.props.autoInsurance ? 'Active' : 'None'} </td>
-                  <td>{this.props.autoInsurance || 'No Auto Insurance Found'}</td>
+                  <td>{this.props.autoInsurance || 'Please Submit Further Documentation'}</td>
                   <td>{this.props.expirationDate || 'N/A'}</td>
                 </tr>
                 <tr>
@@ -94,7 +94,7 @@ export default class ValidateTable extends Component {
                   <td>General</td>
                   <td></td>
                   <td>{this.props.generalInsurance ? 'Active' : 'None'} </td>
-                  <td>{this.props.generalInsurance || 'No Cargo Insruance Found'}</td>
+                  <td>{this.props.generalInsurance || 'Please Submit Further Documentation'}</td>
                   <td>{this.props.expirationDate || 'N/A'}</td>
                 </tr>
               </tbody>
